@@ -1,6 +1,6 @@
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
-import 'package:chat_app/features/pages/signup_page.dart';
+import 'package:chat_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
