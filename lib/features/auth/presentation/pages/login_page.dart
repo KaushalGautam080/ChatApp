@@ -2,6 +2,7 @@ import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/domain/parameters/sign_in_param.dart';
+import 'package:chat_app/features/auth/presentation/pages/home_page.dart';
 import 'package:chat_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:chat_app/injection.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CusForm(hintText: "Enter your email"),
+                CusForm(
+                  hintText: "Enter your email",
+                  textEditingController: eController,
+                ),
                 const SizedBox(height: 20),
                 CusForm(
+                  textEditingController: pController,
                   hintText: "Enter your password",
                   obscureText: obscureText,
                   suffixIcon: Icon(
@@ -57,12 +62,20 @@ class _LoginPageState extends State<LoginPage> {
                       password: pController.text,
                     );
                     await Future.delayed(const Duration(seconds: 2));
-                    var data = await sNUC.call(param);
-                    if (data is SuccessState) {
-                      print("Login Successful");
+                    var dState = await sNUC.call(param);
+                    if (dState is SuccessState) {
+                      debugPrint("Login Successful");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            userModel: dState.data!.userModel,
+                            firebaseUser: dState.data!.firebaseUser,
+                          ),
+                        ),
+                      );
                     }
-                    if (data is FailureState) {
-                      print("ERROR: ${data.errorMsg}");
+                    if (dState is FailureState) {
+                      debugPrint("ERROR: ${dState.errorMsg}");
                     }
                   },
                 ),

@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/data/models/user_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:chat_app/features/auth/domain/parameters/complete_profile_param.dart';
+import 'package:chat_app/features/auth/presentation/pages/home_page.dart';
+import 'package:chat_app/injection.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -75,35 +79,6 @@ class _CProfileState extends State<CProfile> {
             ));
   }
 
-  void checkValues() {
-    String fullName = fController.text;
-    if (fullName == "" || imgFile == null) {
-      print("please fill all the fields");
-    } else {
-      uploadData();
-    }
-  }
-
-  void uploadData() async {
-    UploadTask uploadTask = FirebaseStorage.instance
-        .ref("profilepictures")
-        .child(widget.uModel.uId.toString())
-        .putFile(imgFile!);
-
-    TaskSnapshot snapshot = await uploadTask;
-    String imageUrl = await snapshot.ref.getDownloadURL();
-    String fullName = fController.text;
-
-    widget.uModel.fullName = fullName;
-    widget.uModel.profilePic = imageUrl;
-
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(widget.uModel.uId)
-        .set(widget.uModel.toMap())
-        .then((value) => print("Data Uploaded"));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,9 +118,25 @@ class _CProfileState extends State<CProfile> {
                 loaded: true,
                 height: 60,
                 width: 120,
-                onTap: () async{
-                   await Future.delayed(const Duration(seconds: 3));
-                  checkValues();
+                onTap: () async {
+                  CompleteProfileParam param = CompleteProfileParam(
+                    fullName: fController.text,
+                    userModel: widget.uModel,
+                    imgFile: imgFile!,
+                  );
+                  await Future.delayed(const Duration(seconds: 3));
+                  var dState = await cPUC.call(param);
+                  if (dState is SuccessState) {
+                    debugPrint("Success Data State: $dState");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(
+                          userModel: widget.uModel,
+                          firebaseUser: widget.firebaseUser,
+                        ),
+                      ),
+                    );
+                  }
                 },
               ),
             ],

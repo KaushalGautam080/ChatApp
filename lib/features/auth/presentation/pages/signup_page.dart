@@ -1,9 +1,9 @@
 import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
-import 'package:chat_app/features/auth/data/repositories/auth_repo_impl.dart';
+
 import 'package:chat_app/features/auth/domain/parameters/sign_in_param.dart';
-import 'package:chat_app/features/auth/domain/usecases/sign_up_uc.dart';
+
 import 'package:chat_app/features/auth/presentation/pages/complete_profile.dart';
 import 'package:chat_app/injection.dart';
 import 'package:flutter/material.dart';
@@ -84,9 +84,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     await Future.delayed(const Duration(seconds: 3));
 
                     var dState = await sUc.call(param);
-                     print("AAAAAAAAAAAAAMMMMMMM : $dState");
+                    debugPrint("AAAAAAAAAAAAAMMMMMMM : $dState");
                     if (dState is SuccessState) {
-                      print("AAAAAAAAAAAAA : $dState");
+                      debugPrint("AAAAAAAAAAAAA : $dState");
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CProfile(
@@ -97,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       );
                     }
                     if (dState is FailureState) {
-                      print("FFFFFFFFFFFF : ${dState.errorMsg}");
+                      debugPrint("FFFFFFFFFFFF : ${dState.errorMsg}");
                     }
                   },
                 ),
