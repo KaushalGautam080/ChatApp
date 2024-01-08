@@ -1,6 +1,9 @@
+import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
+import 'package:chat_app/features/auth/domain/parameters/sign_in_param.dart';
 import 'package:chat_app/features/auth/presentation/pages/signup_page.dart';
+import 'package:chat_app/injection.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController eController = TextEditingController();
+  TextEditingController pController = TextEditingController();
   bool obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -42,10 +47,24 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                 ),
                 CusButton(
+                  loaded: true,
                   text: "Login",
                   height: 50,
                   width: 120,
-                  onTap: () {},
+                  onTap: () async {
+                    SignInParam param = SignInParam(
+                      email: eController.text,
+                      password: pController.text,
+                    );
+                    await Future.delayed(const Duration(seconds: 2));
+                    var data = await sNUC.call(param);
+                    if (data is SuccessState) {
+                      print("Login Successful");
+                    }
+                    if (data is FailureState) {
+                      print("ERROR: ${data.errorMsg}");
+                    }
+                  },
                 ),
               ],
             ),

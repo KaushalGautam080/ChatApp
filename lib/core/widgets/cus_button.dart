@@ -35,6 +35,7 @@ class CusButton extends StatelessWidget {
                       loading = true;
                     });
                   }
+                  
                   await onTap();
                   if (loaded) {
                     setState(() {

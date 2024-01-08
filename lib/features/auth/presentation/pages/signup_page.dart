@@ -1,3 +1,4 @@
+import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/data/repositories/auth_repo_impl.dart';
@@ -70,6 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 50,
                 ),
                 CusButton(
+                  loaded: true,
                   text: "SignUp",
                   height: 50,
                   width: 120,
@@ -78,15 +80,25 @@ class _SignUpPageState extends State<SignUpPage> {
                       email: eController.text,
                       password: pController.text,
                     );
-                    
 
-                    await sUc.call(param);
+                    await Future.delayed(const Duration(seconds: 3));
 
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const CProfile(),
-                    //   ),
-                    // );
+                    var dState = await sUc.call(param);
+                     print("AAAAAAAAAAAAAMMMMMMM : $dState");
+                    if (dState is SuccessState) {
+                      print("AAAAAAAAAAAAA : $dState");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CProfile(
+                            uModel: dState.data!.userModel,
+                            firebaseUser: dState.data!.firebaseUser,
+                          ),
+                        ),
+                      );
+                    }
+                    if (dState is FailureState) {
+                      print("FFFFFFFFFFFF : ${dState.errorMsg}");
+                    }
                   },
                 ),
               ],
