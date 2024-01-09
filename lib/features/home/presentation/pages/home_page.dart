@@ -1,5 +1,5 @@
 import 'package:chat_app/features/auth/data/models/user_model.dart';
-import 'package:chat_app/features/auth/presentation/pages/search_page.dart';
+import 'package:chat_app/features/home/presentation/pages/search_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

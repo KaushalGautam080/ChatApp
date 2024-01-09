@@ -2,7 +2,7 @@ import 'package:chat_app/core/resources/data_state.dart';
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/domain/parameters/sign_in_param.dart';
-import 'package:chat_app/features/auth/presentation/pages/home_page.dart';
+import 'package:chat_app/features/home/presentation/pages/home_page.dart';
 import 'package:chat_app/features/auth/presentation/pages/signup_page.dart';
 import 'package:chat_app/injection.dart';
 import 'package:flutter/material.dart';

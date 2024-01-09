@@ -5,7 +5,7 @@ import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/data/models/user_model.dart';
 import 'package:chat_app/features/auth/domain/parameters/complete_profile_param.dart';
-import 'package:chat_app/features/auth/presentation/pages/home_page.dart';
+import 'package:chat_app/features/home/presentation/pages/home_page.dart';
 import 'package:chat_app/injection.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';

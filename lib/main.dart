@@ -1,5 +1,5 @@
 import 'package:chat_app/features/auth/data/models/user_model.dart';
-import 'package:chat_app/features/auth/presentation/pages/home_page.dart';
+import 'package:chat_app/features/home/presentation/pages/home_page.dart';
 import 'package:chat_app/features/auth/presentation/pages/login_page.dart';
 import 'package:chat_app/firebase_helper.dart';
 
