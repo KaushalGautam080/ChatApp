@@ -43,6 +43,7 @@ class _SearchPageState extends State<SearchPage> {
       //create new one
       debugPrint("Chat created ");
       ChatRoomModel newChatRoom = ChatRoomModel(
+        
         chatRoomId: uuid.v1(),
         participants: {
           widget.userModel.uId.toString(): true,

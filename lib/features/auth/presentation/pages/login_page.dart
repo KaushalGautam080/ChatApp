@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     var dState = await sNUC.call(param);
                     if (dState is SuccessState) {
                       debugPrint("Login Successful");
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => HomePage(
                             userModel: dState.data!.userModel,

@@ -87,7 +87,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     debugPrint("AAAAAAAAAAAAAMMMMMMM : $dState");
                     if (dState is SuccessState) {
                       debugPrint("AAAAAAAAAAAAA : $dState");
-                      Navigator.of(context).push(
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => CProfile(
                             uModel: dState.data!.userModel,

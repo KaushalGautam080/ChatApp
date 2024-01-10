@@ -128,7 +128,7 @@ class _CProfileState extends State<CProfile> {
                   var dState = await cPUC.call(param);
                   if (dState is SuccessState) {
                     debugPrint("Success Data State: $dState");
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => HomePage(
                           userModel: widget.uModel,
