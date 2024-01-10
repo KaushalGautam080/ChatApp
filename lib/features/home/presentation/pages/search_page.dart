@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chat_app/core/widgets/cus_button.dart';
 import 'package:chat_app/core/widgets/cus_form.dart';
 import 'package:chat_app/features/auth/data/models/user_model.dart';
@@ -26,19 +24,20 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController eController = TextEditingController();
 
-  Future<ChatRoomModel?> getChatRoomModel(UserModel targetUser) async {
-    ChatRoomModel? chatRoom = ChatRoomModel();
+  Future<ChatRoomModel> getChatRoomModel(UserModel targetUser) async {
+    ChatRoomModel chatRoom;
 
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection("chatrooms")
         .where("participants.${widget.userModel.uId}", isEqualTo: true)
         .where("participants.${targetUser.uId}", isEqualTo: true)
         .get();
-    if (snapshot.docs.isNotEmpty) {
+    if (snapshot.docs.length > 0) {
       //fetch existing
       var docData = snapshot.docs[0].data();
       ChatRoomModel existingChatRoom =
           ChatRoomModel.fromMap(docData as Map<String, dynamic>);
+
       chatRoom = existingChatRoom;
     } else {
       //create new one
@@ -109,6 +108,7 @@ class _SearchPageState extends State<SearchPage> {
                         ChatRoomModel? cModel =
                             await getChatRoomModel(searchedUser);
                         if (cModel != null) {
+                          debugPrint("Error: ${cModel.chatRoomId}");
                           Navigator.pop(context);
                           Navigator.of(context).push(
                             MaterialPageRoute(

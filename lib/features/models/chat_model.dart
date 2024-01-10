@@ -1,16 +1,18 @@
-class ChatRoomModel {
-  String? chatRoomId;
-  Map<String, dynamic>? participants;
+import 'package:equatable/equatable.dart';
+
+class ChatRoomModel extends Equatable{
+   String? chatRoomId;
+ Map<String, dynamic>? participants;
   String? lastMessage;
 
   ChatRoomModel({
-    this.chatRoomId,
-    this.participants,
-    this.lastMessage,
+    required this.chatRoomId,
+    required this.participants,
+    required this.lastMessage,
   });
 
-  ChatRoomModel.fromMap(Map<String, dynamic> map) {
-    chatRoomId = map["chatRoomId "];
+   ChatRoomModel.fromMap(Map<String, dynamic> map) {
+    chatRoomId = map["chatRoomId"] ;
     participants = map["participants"];
     lastMessage = map["lastMessage"];
   }
@@ -22,4 +24,8 @@ class ChatRoomModel {
       "lastMessage": lastMessage,
     };
   }
+  
+  @override
+  // TODO: implement props
+  List<Object?> get props => [chatRoomId,participants,lastMessage];
 }
